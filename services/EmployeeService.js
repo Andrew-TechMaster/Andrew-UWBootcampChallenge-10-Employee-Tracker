@@ -1,6 +1,8 @@
 const DbContext = require('../src/DbContext');
 
 class EmployeeService {
+    DbContext;
+
     constructor(){
         this.DbContext = new DbContext();
     }
@@ -8,6 +10,14 @@ class EmployeeService {
     getAllEmployee() {
         const query = 'SELECT * FROM products';
         this.DbContext.useQuery(query);
+    }
+
+    addEmployee() {
+
+    }
+
+    updateEmployeeRole() {
+
     }
 }
 

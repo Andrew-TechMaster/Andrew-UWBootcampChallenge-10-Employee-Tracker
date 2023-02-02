@@ -1,23 +1,23 @@
+// Import and require mysql2
+const mysql = require('mysql2');
+const connectionString = {
+    host: 'localhost',
+    // MySQL username
+    user: 'root',
+    // MySQL password
+    password: 'mac@sql201',
+    database: 'grocery_db'
+    // database: 'company_db'
+}
+
 class DbContext {
-    constructor(dbconnect) {
-        // Import and require mysql2
-        const mysql = require('mysql2');
+    // #privateField
+    #dbConnect;
 
+    constructor() {
         // Connect to database
-        const db = mysql.createConnection(
-            {
-                host: 'localhost',
-                // MySQL username
-                user: 'root',
-                // MySQL password
-                password: 'mac@sql201',
-                database: 'grocery_db'
-                // database: 'company_db'
-            },
-            console.log(`Connected to the company_db database.`)
-        );
-
-        this.dbconnect = db;
+        const db = mysql.createConnection(connectionString, console.log(`Connected to the database.`));
+        this.#dbConnect = db;
     }
 
     /**
@@ -25,7 +25,7 @@ class DbContext {
     *  @param {string} sqlQuery Sql syntax such as 'SELECT * FROM employee'
     */
     useQuery(sqlQuery) {
-        this.dbconnect.query(sqlQuery, function (err, results) {
+        this.#dbConnect.query(sqlQuery, function (err, results) {
             console.log(results);
         });
     }
