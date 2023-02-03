@@ -1,15 +1,18 @@
 const inquirer = require('inquirer');
 const EmployeeService = require('../services/EmployeeService');
 const RoleService = require('../services/RoleService');
+const DepartmentService = require('../services/DepartmentService');
 
 class PromptQuestions {
 
     #empService;
     #roleService;
+    #deptService;
 
     constructor() {
         this.#empService = new EmployeeService();
         this.#roleService = new RoleService();
+        this.#deptService = new DepartmentService();
     }
 
     getInitialQuestions() {
@@ -51,6 +54,11 @@ class PromptQuestions {
                     .then(() => this.promptInitialQuestions())
                     .then((userInput) => this.decideWhatIsNextStep(userInput.userChoice));
                 break;
+            case "View All Departmens":
+                this.#deptService.getAllDepartmentsAsync()
+                    .then(() => this.promptInitialQuestions())
+                    .then((userInput) => this.decideWhatIsNextStep(userInput.userChoice));
+                break;
             case "Quit":
                 console.log("------------ Thanks for using my app! Quitting... ------------");
                 console.log("------------ Please close the terminal or use 'control + c' to leave the application. ------------");
@@ -58,7 +66,7 @@ class PromptQuestions {
         }
     }
 
-    start() {
+    appStart() {
         this.promptInitialQuestions()
             .then((userInput) => {
                 // console.log(userInput.userChoice);

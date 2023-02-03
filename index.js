@@ -6,7 +6,7 @@ function init() {
     // es.getAllEmployee();
     // es.getAllEmployeesAsync();
     const pq = new PromptQuestions();
-    pq.start();
+    pq.appStart();
 
 }
 
