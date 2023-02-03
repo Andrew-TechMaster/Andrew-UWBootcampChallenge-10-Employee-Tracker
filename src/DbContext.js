@@ -35,10 +35,11 @@ class DbContext {
     *  @param {string} sqlQuery Sql syntax such as 'SELECT * FROM employee'
     **/
     async useQueryAsync(sqlQuery) {
-        await this.#dbConnect.query(sqlQuery)
-            .then(([rows, fields]) => { console.table(rows); });
+        // await this.#dbConnect.query(sqlQuery)
+        //     .then(([rows, fields]) => { console.table(rows); });
 
-        // var temp = await this.#dbConnect.query(sqlQuery);
+        var res = await this.#dbConnect.query(sqlQuery);
+        return res;
         // var log = temp.then(([rows, fields]) => { console.table(rows); });
         // return log;
     }

@@ -1,3 +1,6 @@
+-- $ mysql -u root -p => type password
+-- source schema.sql
+-- source seeds.sql
 
 DROP DATABASE IF EXISTS company_db;
 CREATE DATABASE company_db;

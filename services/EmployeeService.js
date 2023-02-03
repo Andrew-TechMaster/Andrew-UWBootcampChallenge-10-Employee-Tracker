@@ -9,7 +9,7 @@ class EmployeeService {
 
     async getAllEmployeesAsync() {
         const query = 'SELECT * FROM employees';
-        await this.DbContext.useQueryAsync(query);
+        await this.DbContext.useQueryAsync(query).then(([rows, fields]) => { console.table(rows); });
     }
 
     getAllEmployee() {

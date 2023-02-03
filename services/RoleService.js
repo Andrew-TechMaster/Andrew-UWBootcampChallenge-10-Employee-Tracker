@@ -10,7 +10,7 @@ class RoleService {
 
     async getAllRolesAsync() {
         const query = 'SELECT * FROM roles';
-        await this.DbContext.useQueryAsync(query);
+        await this.DbContext.useQueryAsync(query).then(([rows, fields]) => { console.table(rows); });
     }
 
 }

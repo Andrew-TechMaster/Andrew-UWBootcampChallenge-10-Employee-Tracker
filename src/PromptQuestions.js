@@ -28,7 +28,7 @@ class PromptQuestions {
                     "Add Role",
                     "View All Departmens",
                     "Add Department",
-                    "Quit"
+                    "<-------Quit------->"
                 ],
                 name: "userChoice"
             }
@@ -37,9 +37,26 @@ class PromptQuestions {
         return initialQuestions;
     }
 
+    getAddedDepartmentQuetions() {
+        const questions = [
+            {
+                type: "input",
+                message: "What is the name of the department?",
+                name: "deptName"
+            }
+        ];
+
+        return questions;
+    }
+
     promptInitialQuestions() {
         const initialQuestion = this.getInitialQuestions();
         return inquirer.prompt(initialQuestion);
+    }
+
+    promptAddedDepartmentQuetions() {
+        const questions = this.getAddedDepartmentQuetions();
+        return inquirer.prompt(questions);
     }
 
     decideWhatIsNextStep(aString) {
@@ -59,7 +76,15 @@ class PromptQuestions {
                     .then(() => this.promptInitialQuestions())
                     .then((userInput) => this.decideWhatIsNextStep(userInput.userChoice));
                 break;
-            case "Quit":
+            case "Add Department":
+                this.promptAddedDepartmentQuetions()
+                    .then((userInput) => {
+                        this.#deptService.addDepartmentAsync(userInput.deptName)
+                    })
+                    .then(() => this.promptInitialQuestions())
+                    .then((userInput) => this.decideWhatIsNextStep(userInput.userChoice));
+                break;
+            case "<-------Quit------->":
                 console.log("------------ Thanks for using my app! Quitting... ------------");
                 console.log("------------ Please close the terminal or use 'control + c' to leave the application. ------------");
                 break;
