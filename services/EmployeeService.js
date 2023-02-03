@@ -7,14 +7,14 @@ class EmployeeService {
         this.DbContext = new DbContext();
     }
 
+    async getAllEmployeesAsync() {
+        const query = 'SELECT * FROM employees';
+        await this.DbContext.useQueryAsync(query);
+    }
+
     getAllEmployee() {
         const query = 'SELECT * FROM products';
         this.DbContext.useQuery(query);
-    }
-
-    async getAllEmployeeAsync() {
-        const query = 'SELECT * FROM employees';
-        await this.DbContext.useQueryAsync(query);
     }
 
     addEmployee() {}

@@ -25,14 +25,22 @@ class DbContext {
     /**
     *  Function to query database
     *  @param {string} sqlQuery Sql syntax such as 'SELECT * FROM employee'
-    */
+    **/
     useQuery(sqlQuery) {
         this.#dbConnect.query(sqlQuery, (err, results) => console.table(results));
     }
 
+    /**
+    *  Function to query database (Async)
+    *  @param {string} sqlQuery Sql syntax such as 'SELECT * FROM employee'
+    **/
     async useQueryAsync(sqlQuery) {
         await this.#dbConnect.query(sqlQuery)
             .then(([rows, fields]) => { console.table(rows); });
+
+        // var temp = await this.#dbConnect.query(sqlQuery);
+        // var log = temp.then(([rows, fields]) => { console.table(rows); });
+        // return log;
     }
 
 }
