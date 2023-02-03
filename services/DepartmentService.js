@@ -9,13 +9,18 @@ class DepartmentService {
 
 
     async getAllDepartmentsAsync() {
-        const query = 'SELECT * FROM departments';
+        const query = 'SELECT * FROM departments;';
         await this.DbContext.useQueryAsync(query).then(([rows, fields]) => { console.table(rows); });
     }
 
     async addDepartmentAsync(depName) {
-        const query = `INSERT INTO departments(name) VALUES ('${depName}')`;
+        const query = `INSERT INTO departments(name) VALUES ('${depName}');`;
         await this.DbContext.useQueryAsync(query).then(([rows, fields]) => { console.info(`${depName} has been added to the database`); })
+    }
+
+    async deleteDepartmentAsync(depName) {
+        const query = `DELETE FROM departments WHERE name='${depName}';`;
+        await this.DbContext.useQueryAsync(query).then(() => console.error(`${depName} has been deleted from the departement tabel if exisited`));
     }
 }
 

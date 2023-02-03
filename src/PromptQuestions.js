@@ -28,6 +28,7 @@ class PromptQuestions {
                     "Add Role",
                     "View All Departmens",
                     "Add Department",
+                    "Delete Department",
                     "<-------Quit------->"
                 ],
                 name: "userChoice"
@@ -49,6 +50,18 @@ class PromptQuestions {
         return questions;
     }
 
+    getDeletedDepartmentQuetions() {
+        const questions = [
+            {
+                type: "input",
+                message: "What is the name of the department you want to delete?",
+                name: "deptName"
+            }
+        ];
+
+        return questions;
+    }
+
     promptInitialQuestions() {
         const initialQuestion = this.getInitialQuestions();
         return inquirer.prompt(initialQuestion);
@@ -56,6 +69,11 @@ class PromptQuestions {
 
     promptAddedDepartmentQuetions() {
         const questions = this.getAddedDepartmentQuetions();
+        return inquirer.prompt(questions);
+    }
+
+    promptDeletedDepartmentQuetions() {
+        const questions = this.getDeletedDepartmentQuetions();
         return inquirer.prompt(questions);
     }
 
@@ -84,6 +102,14 @@ class PromptQuestions {
                     .then(() => this.promptInitialQuestions())
                     .then((userInput) => this.decideWhatIsNextStep(userInput.userChoice));
                 break;
+            case "Delete Department":
+                this.promptDeletedDepartmentQuetions()
+                .then((userInput) => {
+                    this.#deptService.deleteDepartmentAsync(userInput.deptName)
+                })
+                .then(() => this.promptInitialQuestions())
+                .then((userInput) => this.decideWhatIsNextStep(userInput.userChoice));
+            break;
             case "<-------Quit------->":
                 console.log("------------ Thanks for using my app! Quitting... ------------");
                 console.log("------------ Please close the terminal or use 'control + c' to leave the application. ------------");
