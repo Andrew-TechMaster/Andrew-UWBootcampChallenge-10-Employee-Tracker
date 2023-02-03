@@ -12,13 +12,14 @@ class EmployeeService {
         this.DbContext.useQuery(query);
     }
 
-    addEmployee() {
-
+    async getAllEmployeeAsync() {
+        const query = 'SELECT * FROM employees';
+        await this.DbContext.useQueryAsync(query);
     }
 
-    updateEmployeeRole() {
+    addEmployee() {}
 
-    }
+    updateEmployeeRole() {}
 }
 
 module.exports = EmployeeService;

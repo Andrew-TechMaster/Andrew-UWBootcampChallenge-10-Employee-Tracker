@@ -6,8 +6,8 @@ const connectionString = {
     user: 'root',
     // MySQL password
     password: 'mac@sql201',
-    database: 'grocery_db'
-    // database: 'company_db'
+    // database: 'grocery_db'
+    database: 'company_db'
 }
 
 class DbContext {
@@ -16,8 +16,10 @@ class DbContext {
 
     constructor() {
         // Connect to database
-        const db = mysql.createConnection(connectionString, console.log(`Connected to the database.`));
-        this.#dbConnect = db;
+        // const db = mysql.createConnection(connectionString, console.log(`Connected to the ${connectionString.database}.`));
+        const dbAsync = mysql.createPool(connectionString).promise();
+
+        this.#dbConnect = dbAsync;
     }
 
     /**
@@ -25,9 +27,12 @@ class DbContext {
     *  @param {string} sqlQuery Sql syntax such as 'SELECT * FROM employee'
     */
     useQuery(sqlQuery) {
-        this.#dbConnect.query(sqlQuery, function (err, results) {
-            console.log(results);
-        });
+        this.#dbConnect.query(sqlQuery, (err, results) => console.table(results));
+    }
+
+    async useQueryAsync(sqlQuery) {
+        await this.#dbConnect.query(sqlQuery)
+            .then(([rows, fields]) => { console.table(rows); });
     }
 
 }
