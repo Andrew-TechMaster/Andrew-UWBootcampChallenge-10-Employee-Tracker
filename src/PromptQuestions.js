@@ -38,6 +38,24 @@ class PromptQuestions {
         return initialQuestions;
     }
 
+    getAddedRoleQuetions() {
+        const questions = [
+            {
+                type: 'input',
+                message: 'What is the name of the role?',
+                name: 'roleTitle'
+            },
+
+            {
+                type: 'input',
+                message: 'What is the salary of the role?',
+                name: 'roleSalary'
+            }
+        ];
+
+        return questions;
+    }
+
     getAddedDepartmentQuetions() {
         const questions = [
             {
@@ -64,6 +82,7 @@ class PromptQuestions {
 
     promptInitialQuestions() {
         const initialQuestion = this.getInitialQuestions();
+        console.log("{================= 👋 Welcome 👋 =================}");
         return inquirer.prompt(initialQuestion);
     }
 
@@ -80,17 +99,39 @@ class PromptQuestions {
     decideWhatIsNextStep(aString) {
         switch (aString) {
             case "View All Empolyees":
-                this.#empService.getAllEmployeesAsync()
+                this.#empService.displayAllEmployeesAsync()
                     .then(() => this.promptInitialQuestions())
                     .then((userInput) => this.decideWhatIsNextStep(userInput.userChoice));
                 break;
             case "View All Roles":
-                this.#roleService.getAllRolesAsync()
+                this.#roleService.displayAllRolesAsync()
                     .then(() => this.promptInitialQuestions())
                     .then((userInput) => this.decideWhatIsNextStep(userInput.userChoice));
                 break;
+            case "Add Role":
+                inquirer.prompt(this.getAddedRoleQuetions())
+                    .then(({ roleTitle, roleSalary }) => {
+                        this.#deptService.getAllDepartmentsAsync()
+                            .then(([rows, fields]) => {
+                                const deptChoices = rows.map(({ id, name }) => ({
+                                    name: name,
+                                    value: id
+                                }));
+                                return deptChoices;
+                            }).then((deptChoices) => {
+                                inquirer.prompt({
+                                    type: "list",
+                                    message: "Which department does the role belong to?",
+                                    choices: deptChoices,
+                                    name: "belongTo"
+                                }).then((choice) => {
+                                    this.#roleService.addRollAsync(roleTitle, roleSalary, choice.belongTo);
+                                }).then(() => this.promptInitialQuestions()).then((userInput) => this.decideWhatIsNextStep(userInput.userChoice));
+                            });
+                    });
+                break;
             case "View All Departmens":
-                this.#deptService.getAllDepartmentsAsync()
+                this.#deptService.displayAllDepartmentsAsync()
                     .then(() => this.promptInitialQuestions())
                     .then((userInput) => this.decideWhatIsNextStep(userInput.userChoice));
                 break;
@@ -104,12 +145,12 @@ class PromptQuestions {
                 break;
             case "Delete Department":
                 this.promptDeletedDepartmentQuetions()
-                .then((userInput) => {
-                    this.#deptService.deleteDepartmentAsync(userInput.deptName)
-                })
-                .then(() => this.promptInitialQuestions())
-                .then((userInput) => this.decideWhatIsNextStep(userInput.userChoice));
-            break;
+                    .then((userInput) => {
+                        this.#deptService.deleteDepartmentAsync(userInput.deptName)
+                    })
+                    .then(() => this.promptInitialQuestions())
+                    .then((userInput) => this.decideWhatIsNextStep(userInput.userChoice));
+                break;
             case "<-------Quit------->":
                 console.log("------------ Thanks for using my app! Quitting... ------------");
                 console.log("------------ Please close the terminal or use 'control + c' to leave the application. ------------");

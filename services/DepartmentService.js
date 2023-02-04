@@ -7,8 +7,13 @@ class DepartmentService {
         this.DbContext = new DbContext();
     }
 
-
     async getAllDepartmentsAsync() {
+        const query = 'SELECT * FROM departments;';
+        const res = await this.DbContext.useQueryAsync(query);
+        return res;
+    }
+
+    async displayAllDepartmentsAsync() {
         const query = 'SELECT * FROM departments;';
         await this.DbContext.useQueryAsync(query).then(([rows, fields]) => { console.table(rows); });
     }
