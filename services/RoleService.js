@@ -10,7 +10,7 @@ class RoleService {
     async getAllRolesAsync() {
         const query = 'SELECT * FROM roles';
         const res = await this.DbContext.useQueryAsync(query);
-        return res;
+        return res[0];
     }
 
     async displayAllRolesAsync() {
@@ -21,7 +21,7 @@ class RoleService {
     async addRollAsync(title, salary, deptId) {
         const query = `INSERT INTO roles(title, salary, department_id)
                        VALUES ('${title}', ${salary}, ${deptId})`;
-        await this.DbContext.useQueryAsync(query).then(() => console.log(`Role:${title} has been added to the roles table`))
+        await this.DbContext.useQueryAsync(query).then(() => console.log(`Role:${title} has been added to the roles table`));
     }
 
 }

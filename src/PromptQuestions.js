@@ -17,7 +17,7 @@ class PromptQuestions {
 
     promptInitialQuestions() {
         const initialQuestion = this.getInitialQuestions();
-        console.log("{================= 👋 Welcome 👋 =================}");
+        console.log("🎉{=========================== 👋 Welcome 👋 ===========================}🎉");
         return inquirer.prompt(initialQuestion);
     }
 
@@ -33,6 +33,11 @@ class PromptQuestions {
 
     promptInitialAddedRoleQuetions() {
         const questions = this.getInitialAddedRoleQuetions();
+        return inquirer.prompt(questions);
+    }
+
+    promptInitialAddedEmployeeQuetions() {
+        const questions = this.getInitialAddedEmployeeQuetions();
         return inquirer.prompt(questions);
     }
 
@@ -95,6 +100,24 @@ class PromptQuestions {
                 type: 'input',
                 message: 'What is the salary of the role?',
                 name: 'roleSalary'
+            }
+        ];
+
+        return questions;
+    }
+
+    getInitialAddedEmployeeQuetions() {
+        const questions = [
+            {
+                type: 'input',
+                message: "What is the employee's first name?",
+                name: 'empFirstName'
+            },
+
+            {
+                type: 'input',
+                message: "What is the employee's last name?",
+                name: 'empLastName'
             }
         ];
 
