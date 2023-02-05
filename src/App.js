@@ -31,6 +31,9 @@ class App {
             case "Add Employee":
                 this.handleAddEmployee();
                 break;
+            case "Update Employee Role":
+                this.handleUpdateEmployeeRole();
+                break;
             case "View All Roles":
                 this.handleViewAllRoles();
                 break;
@@ -160,6 +163,44 @@ class App {
             .then((userInput) => this.decideWhatIsNextStep(userInput.userChoice));
     }
 
+    handleUpdateEmployeeRole() {
+        // console.log('handling...');
+        // this.#promtpQuestions.promptUpdatedEmployeeRoleQuestions().then((data) => console.log(data))
+        this.#empService.getAllEmployeesAsync().then((data) => {
+            const tempList = [];
+            data.forEach(el => {
+                const fullName = `${el.first_name} ${el.last_name}`
+                tempList.push({ name: fullName, value: el.id })
+            })
+            return tempList;
+        }).then((updatedEmpName) => {
+            inquirer.prompt({
+                type: 'list',
+                message: "Which employee's role do you want to update?",
+                choices: updatedEmpName,
+                name: 'updatedEmp'
+            }).then((updatedEmp) => {
+                // console.log(updatedEmpId);
+                this.#roleService.getAllRolesAsync().then((data) => {
+                    const tempList = [];
+                    data.forEach(el => {
+                        tempList.push({ name: el.title, value: el.id })
+                    })
+                    return tempList;
+                }).then((tempList) => {
+                    inquirer.prompt({
+                        type: 'list',
+                        message: "Which role do you want to assign the seleted employee?",
+                        choices: tempList,
+                        name: 'updatedRole'
+                    }).then((updatedRole) => {
+                        // console.log(updatedEmp, updatedRole);
+                        this.#empService.updatedEmployeeRoleAsync(updatedEmp.updatedEmp, updatedRole.updatedRole);
+                    }).then(() => this.#promtpQuestions.promptInitialQuestions()).then((userInput) => this.decideWhatIsNextStep(userInput.userChoice));
+                })
+            })
+        })
+    }
 }
 
 module.exports = App;

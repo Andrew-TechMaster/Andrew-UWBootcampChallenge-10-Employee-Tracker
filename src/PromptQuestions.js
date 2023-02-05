@@ -1,19 +1,22 @@
 const inquirer = require('inquirer');
-const EmployeeService = require('../services/EmployeeService');
-const RoleService = require('../services/RoleService');
-const DepartmentService = require('../services/DepartmentService');
+const Validator = require('./Validator');
+// const EmployeeService = require('../services/EmployeeService');
+// const RoleService = require('../services/RoleService');
+// const DepartmentService = require('../services/DepartmentService');
 
 class PromptQuestions {
 
     // #empService;
     // #roleService;
     // #deptService;
+    #validator;
 
-    // constructor() {
-    //     this.#empService = new EmployeeService();
-    //     this.#roleService = new RoleService();
-    //     this.#deptService = new DepartmentService();
-    // }
+    constructor() {
+        // this.#empService = new EmployeeService();
+        // this.#roleService = new RoleService();
+        // this.#deptService = new DepartmentService();
+        this.#validator = new Validator();
+    }
 
     promptInitialQuestions() {
         const initialQuestion = this.getInitialQuestions();
@@ -41,6 +44,11 @@ class PromptQuestions {
         return inquirer.prompt(questions);
     }
 
+    // promptUpdatedEmployeeRoleQuestions() {
+    //     const questions = this.getUpdatedEmployeeRoleQuestions();
+    //     return inquirer.prompt(questions);
+    // }
+
     getInitialQuestions() {
         const initialQuestions = [
             {
@@ -63,7 +71,7 @@ class PromptQuestions {
 
         return initialQuestions;
     }
-    
+
     getAddedDepartmentQuetions() {
         const questions = [
             {
@@ -99,7 +107,8 @@ class PromptQuestions {
             {
                 type: 'input',
                 message: 'What is the salary of the role?',
-                name: 'roleSalary'
+                name: 'roleSalary',
+                validate: (value) => this.#validator.checkIsNumber(value)
             }
         ];
 
@@ -123,6 +132,23 @@ class PromptQuestions {
 
         return questions;
     }
+
+    // getUpdatedEmployeeRoleQuestions() {
+    //     const questions = [
+    //         {
+    //             type: 'input',
+    //             message: "Which employee's role do you want to update?",
+    //             name: 'empFullName'
+    //         },
+    //         {
+    //             type: 'input',
+    //             message: "Which role do you want to assign the seleted employee?",
+    //             name: 'empNewRole'
+    //         }
+    //     ];
+
+    //     return questions;
+    // }
 
     // decideWhatIsNextStep(aString) {
     //     switch (aString) {

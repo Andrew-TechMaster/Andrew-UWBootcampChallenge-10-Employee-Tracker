@@ -3,7 +3,7 @@ const DbContext = require('../src/DbContext');
 class EmployeeService {
     DbContext;
 
-    constructor(){
+    constructor() {
         this.DbContext = new DbContext();
     }
 
@@ -24,14 +24,22 @@ class EmployeeService {
         await this.DbContext.useQueryAsync(query).then(() => console.log(`Employee:${first_name} ${last_name} has been added to the employees table`));
     }
 
+    async updatedEmployeeRoleAsync(empId, updatedRoleId) {
+        const query = `UPDATE employees
+                       SET role_id = ${updatedRoleId}
+                       WHERE employees.id = ${empId};`
+
+        await this.DbContext.useQueryAsync(query).then(() => console.log(`Employee with id ${empId}'s role has been updated to role_id: ${updatedRoleId}`));
+    }
+
     getAllEmployee() {
         const query = 'SELECT * FROM products';
         this.DbContext.useQuery(query);
     }
 
-    addEmployee() {}
+    addEmployee() { }
 
-    updateEmployeeRole() {}
+    updateEmployeeRole() { }
 }
 
 module.exports = EmployeeService;
