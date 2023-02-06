@@ -56,6 +56,10 @@ class App {
         }
     }
 
+    /**
+    *  the following "handleXXX()" are Functions to handle different cases
+    *  handlers will get called in decideWhatIsNextStep(aString)
+    **/
     handleViewAllEmployees() {
         this.#empService.displayAllEmployeesAsync()
             .then(() => this.#promtpQuestions.promptInitialQuestions())
@@ -111,7 +115,7 @@ class App {
                                     }).then((data) => {
                                         // console.log(empManager);
                                         if (data.empManager === "None") {
-                                            this.#empService.addEmployeeAsync(empFirstName, empLastName, empRole.empRole);
+                                            return this.#empService.addEmployeeAsync(empFirstName, empLastName, empRole.empRole, null);
                                         }
                                         this.#empService.addEmployeeAsync(empFirstName, empLastName, empRole.empRole, data.empManager);
                                     }).then(() => this.#promtpQuestions.promptInitialQuestions()).then((userInput) => this.decideWhatIsNextStep(userInput.userChoice));
@@ -164,8 +168,6 @@ class App {
     }
 
     handleUpdateEmployeeRole() {
-        // console.log('handling...');
-        // this.#promtpQuestions.promptUpdatedEmployeeRoleQuestions().then((data) => console.log(data))
         this.#empService.getAllEmployeesAsync().then((data) => {
             const tempList = [];
             data.forEach(el => {

@@ -37,9 +37,6 @@ class EmployeeService {
         this.DbContext.useQuery(query);
     }
 
-    addEmployee() { }
-
-    updateEmployeeRole() { }
 }
 
 module.exports = EmployeeService;
