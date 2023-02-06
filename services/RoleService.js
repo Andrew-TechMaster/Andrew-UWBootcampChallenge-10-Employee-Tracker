@@ -24,6 +24,10 @@ class RoleService {
         await this.DbContext.useQueryAsync(query).then(() => console.log(`Role:${title} has been added to the roles table`));
     }
 
+    async deleteRoleAsync(roleName) {
+        const query = `DELETE FROM roles WHERE title='${roleName}';`;
+        await this.DbContext.useQueryAsync(query).then(() => console.log(`${roleName} has been deleted from the roles table if exisited`));
+    }
 }
 
 module.exports = RoleService;

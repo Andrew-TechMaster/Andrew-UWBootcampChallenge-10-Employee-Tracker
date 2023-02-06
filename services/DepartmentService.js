@@ -25,7 +25,7 @@ class DepartmentService {
 
     async deleteDepartmentAsync(depName) {
         const query = `DELETE FROM departments WHERE name='${depName}';`;
-        await this.DbContext.useQueryAsync(query).then(() => console.error(`${depName} has been deleted from the departement tabel if exisited`));
+        await this.DbContext.useQueryAsync(query).then(() => console.error(`${depName} has been deleted from the departements table if exisited`));
     }
 }
 

@@ -34,8 +34,18 @@ class PromptQuestions {
         return inquirer.prompt(questions);
     }
 
+    promptDeletedRoleQuetions() {
+        const questions = this.getDeletedRoleQuetions();
+        return inquirer.prompt(questions);
+    }
+
     promptInitialAddedEmployeeQuetions() {
         const questions = this.getInitialAddedEmployeeQuetions();
+        return inquirer.prompt(questions);
+    }
+
+    promptDeletedEmployeeQuetions() { 
+        const questions = this.getDeletedEmployeeQuetions();
         return inquirer.prompt(questions);
     }
 
@@ -52,8 +62,10 @@ class PromptQuestions {
                     "View All Empolyees",
                     "Add Employee",
                     "Update Employee Role",
+                    "Delete Employee",
                     "View All Roles",
                     "Add Role",
+                    "Delete Role",
                     "View All Departmens",
                     "Add Department",
                     "Delete Department",
@@ -109,6 +121,18 @@ class PromptQuestions {
         return questions;
     }
 
+    getDeletedRoleQuetions() {
+        const questions = [
+            {
+                type: "input",
+                message: "What is the title of the role you want to delete?",
+                name: "roleTitle"
+            }
+        ];
+
+        return questions;
+    }
+
     getInitialAddedEmployeeQuetions() {
         const questions = [
             {
@@ -121,6 +145,19 @@ class PromptQuestions {
                 type: 'input',
                 message: "What is the employee's last name?",
                 name: 'empLastName'
+            }
+        ];
+
+        return questions;
+    }
+
+    getDeletedEmployeeQuetions() {
+        const questions = [
+            {
+                type: "input",
+                message: "What is the id of the employee you want to delete?",
+                name: "empId",
+                validate: (data) => this.#validator.checkIsNumber(data)
             }
         ];
 

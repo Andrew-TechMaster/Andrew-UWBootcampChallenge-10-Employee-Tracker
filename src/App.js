@@ -34,11 +34,17 @@ class App {
             case "Update Employee Role":
                 this.handleUpdateEmployeeRole();
                 break;
+            case "Delete Employee":
+                this.handleDeleteEmployee();
+                break;
             case "View All Roles":
                 this.handleViewAllRoles();
                 break;
             case "Add Role":
                 this.handleAddRole();
+                break;
+            case "Delete Role":
+                this.handleDeleteRole();
                 break;
             case "View All Departmens":
                 this.handleViewAllDepartments();
@@ -158,10 +164,30 @@ class App {
             .then((userInput) => this.decideWhatIsNextStep(userInput.userChoice));
     }
 
+    handleDeleteEmployee() {
+        console.log('handling');
+        this.#promtpQuestions.promptDeletedEmployeeQuetions()
+            .then((data) => {
+                this.#empService.deleteEmployeeAsync(data.empId);
+            })
+            .then(() => this.#promtpQuestions.promptInitialQuestions())
+            .then((userInput) => this.decideWhatIsNextStep(userInput.userChoice));
+    }
+
+    handleDeleteRole() {
+        console.log('handling');
+        this.#promtpQuestions.promptDeletedRoleQuetions()
+            .then((data) => {
+                this.#roleService.deleteRoleAsync(data.roleTitle);
+            })
+            .then(() => this.#promtpQuestions.promptInitialQuestions())
+            .then((userInput) => this.decideWhatIsNextStep(userInput.userChoice));
+    }
+
     handleDeleteDepartment() {
         this.#promtpQuestions.promptDeletedDepartmentQuetions()
             .then((userInput) => {
-                this.#deptService.deleteDepartmentAsync(userInput.deptName)
+                this.#deptService.deleteDepartmentAsync(userInput.deptName);
             })
             .then(() => this.#promtpQuestions.promptInitialQuestions())
             .then((userInput) => this.decideWhatIsNextStep(userInput.userChoice));

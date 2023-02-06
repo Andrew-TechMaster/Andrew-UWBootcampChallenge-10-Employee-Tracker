@@ -32,6 +32,11 @@ class EmployeeService {
         await this.DbContext.useQueryAsync(query).then(() => console.log(`Employee with id ${empId}'s role has been updated to role_id: ${updatedRoleId}`));
     }
 
+    async deleteEmployeeAsync(empId) {
+        const query = `DELETE FROM employees WHERE id='${empId}';`;
+        await this.DbContext.useQueryAsync(query).then(() => console.log(`Employee with ID:${empId} has been deleted from the employees table if exisited`));
+    }
+
     getAllEmployee() {
         const query = 'SELECT * FROM products';
         this.DbContext.useQuery(query);
