@@ -68,6 +68,7 @@ class PromptQuestions {
                     "View Count Of Employees Group By...",
                     "Add Employee",
                     "Update Employee Role",
+                    "Update Employee Manager",
                     "Delete Employee",
                     "View All Roles",
                     "Add Role",

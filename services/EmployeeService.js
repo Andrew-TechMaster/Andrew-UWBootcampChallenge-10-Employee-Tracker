@@ -35,6 +35,17 @@ class EmployeeService {
         });
     }
 
+    async updatedEmployeeManagerAsync(empId, updatedManagerId) {
+        const query = `UPDATE employees
+                       SET manager_id = ${updatedManagerId}
+                       WHERE employees.id = ${empId};`
+
+        await this.DbContext.useQueryAsync(query).then(() => {
+            console.log('\n');
+            console.log(`Employee with id ${empId}'s manager has been updated to manager_id: ${updatedManagerId}`);
+        });
+    }
+
     async deleteEmployeeAsync(empId) {
         const query = `DELETE FROM employees WHERE id='${empId}';`;
         await this.DbContext.useQueryAsync(query).then(() => {

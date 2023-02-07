@@ -37,6 +37,9 @@ class App {
             case "Update Employee Role":
                 this.handleUpdateEmployeeRole();
                 break;
+            case "Update Employee Manager":
+                this.handleUpdateEmployeeManager();
+                break;
             case "Delete Employee":
                 this.handleDeleteEmployee();
                 break;
@@ -229,6 +232,42 @@ class App {
                     }).then((updatedRole) => {
                         // console.log(updatedEmp, updatedRole);
                         this.#empService.updatedEmployeeRoleAsync(updatedEmp.updatedEmp, updatedRole.updatedRole);
+                    }).then(() => this.#promtpQuestions.promptInitialQuestions()).then((userInput) => this.decideWhatIsNextStep(userInput.userChoice));
+                })
+            })
+        })
+    }
+
+    handleUpdateEmployeeManager() {
+        this.#empService.getAllEmployeesAsync().then((data) => {
+            const tempList = [];
+            data.forEach(el => {
+                const fullName = `${el.first_name} ${el.last_name}`
+                tempList.push({ name: fullName, value: el.id })
+            })
+            return tempList;
+        }).then((updatedEmp) => {
+            inquirer.prompt({
+                type: 'list',
+                message: "Which employee's manager do you want to update?",
+                choices: updatedEmp,
+                name: 'updatedEmp'
+            }).then((updatedEmp) => {
+                this.#empService.getAllEmployeesAsync().then((data) => {
+                    const tempList = [];
+                    data.forEach(el => {
+                        const fullName = `${el.first_name} ${el.last_name}`
+                        tempList.push({ name: fullName, value: el.id })
+                    })
+                    return tempList;
+                }).then((tempList) => {
+                    inquirer.prompt({
+                        type: 'list',
+                        message: "Which manager do you want to assign the seleted employee?",
+                        choices: tempList,
+                        name: 'updatedManager'
+                    }).then((updatedManager) => {
+                        this.#empService.updatedEmployeeManagerAsync(updatedEmp.updatedEmp, updatedManager.updatedManager);
                     }).then(() => this.#promtpQuestions.promptInitialQuestions()).then((userInput) => this.decideWhatIsNextStep(userInput.userChoice));
                 })
             })
