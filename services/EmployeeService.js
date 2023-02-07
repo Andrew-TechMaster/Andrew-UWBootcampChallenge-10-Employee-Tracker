@@ -1,4 +1,4 @@
-const DbContext = require('../src/DbContext');
+const DbContext = require('../config/DbContext');
 
 class EmployeeService {
     DbContext;

@@ -1,13 +1,15 @@
 // Import and require mysql2
 const mysql = require('mysql2');
+require('dotenv').config();
+
 const connectionString = {
     host: 'localhost',
     // MySQL username
-    user: 'root',
+    user: process.env.DB_USER,
     // MySQL user password
-    password: 'mac@sql201',
+    password: process.env.DB_PASSWORD,
     // MySQL db name
-    database: 'company_db'
+    database: process.env.DB_NAME
 }
 
 class DbContext {

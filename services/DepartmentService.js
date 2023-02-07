@@ -1,4 +1,4 @@
-const DbContext = require('../src/DbContext');
+const DbContext = require('../config/DbContext');
 
 class DepartmentService {
     DbContext;
@@ -36,11 +36,12 @@ class DepartmentService {
 
     // View the total utilized budget of a department
     async displayTotalBudgetOfAnDepartment() {
-        const query = `SELECT departments.name, SUM(roles.salary), COUNT(*)
+        const query = `SELECT departments.name, SUM(roles.salary) AS 'Total Budget', COUNT(employees.id) AS '# of Employees'
                            FROM departments 
                            INNER JOIN roles ON departments.id = roles.department_id
                            INNER JOIN employees ON roles.id = employees.role_id
-                           GROUP BY departments.name;`;
+                           GROUP BY departments.name
+                           ORDER BY 'Total Budget' DESC;`;
         await this.DbContext.useQueryAsync(query).then(([rows, fields]) => { console.table(rows); });
     }
 
