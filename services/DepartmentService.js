@@ -20,13 +20,30 @@ class DepartmentService {
 
     async addDepartmentAsync(depName) {
         const query = `INSERT INTO departments(name) VALUES ('${depName}');`;
-        await this.DbContext.useQueryAsync(query).then(([rows, fields]) => { console.info(`${depName} has been added to the database`); })
+        await this.DbContext.useQueryAsync(query).then(([rows, fields]) => {
+            console.log('\n');
+            console.log(`${depName} has been added to the database`);
+        })
     }
 
     async deleteDepartmentAsync(depName) {
         const query = `DELETE FROM departments WHERE name='${depName}';`;
-        await this.DbContext.useQueryAsync(query).then(() => console.error(`${depName} has been deleted from the departements table if exisited`));
+        await this.DbContext.useQueryAsync(query).then(() => {
+            console.log('\n');
+            console.log(`${depName} has been deleted from the departements table if exisited`);
+        });
     }
+
+    // View the total utilized budget of a department
+    async displayTotalBudgetOfAnDepartment() {
+        const query = `SELECT departments.name, SUM(roles.salary), COUNT(*)
+                           FROM departments 
+                           INNER JOIN roles ON departments.id = roles.department_id
+                           INNER JOIN employees ON roles.id = employees.role_id
+                           GROUP BY departments.name;`;
+        await this.DbContext.useQueryAsync(query).then(([rows, fields]) => { console.table(rows); });
+    }
+
 }
 
 module.exports = DepartmentService;

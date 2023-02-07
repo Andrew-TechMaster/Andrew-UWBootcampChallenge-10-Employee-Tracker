@@ -29,12 +29,26 @@ class EmployeeService {
                        SET role_id = ${updatedRoleId}
                        WHERE employees.id = ${empId};`
 
-        await this.DbContext.useQueryAsync(query).then(() => console.log(`Employee with id ${empId}'s role has been updated to role_id: ${updatedRoleId}`));
+        await this.DbContext.useQueryAsync(query).then(() => {
+            console.log('\n');
+            console.log(`Employee with id ${empId}'s role has been updated to role_id: ${updatedRoleId}`);
+        });
     }
 
     async deleteEmployeeAsync(empId) {
         const query = `DELETE FROM employees WHERE id='${empId}';`;
-        await this.DbContext.useQueryAsync(query).then(() => console.log(`Employee with ID:${empId} has been deleted from the employees table if exisited`));
+        await this.DbContext.useQueryAsync(query).then(() => {
+            console.log('\n');
+            console.log(`Employee with ID:${empId} has been deleted from the employees table if exisited`);
+        });
+    }
+
+    async displayEmployeeGroupByAsync(byWhat) {
+        const query = `SELECT ${byWhat}, count(*) 
+                       FROM employees 
+                       INNER JOIN roles ON employees.role_id = roles.id
+                       GROUP BY ${byWhat};`;
+        await this.DbContext.useQueryAsync(query).then(([rows, fields]) => { console.table(rows); });
     }
 
     getAllEmployee() {

@@ -28,6 +28,9 @@ class App {
             case "View All Empolyees":
                 this.handleViewAllEmployees();
                 break;
+            case "View Count Of Employees Group By...":
+                this.handleViewCountEmployeesGroupBy();
+                break;
             case "Add Employee":
                 this.handleAddEmployee();
                 break;
@@ -48,6 +51,9 @@ class App {
                 break;
             case "View All Departmens":
                 this.handleViewAllDepartments();
+                break;
+            case "View The Total Utilized Budget Of A Department":
+                this.handleViewTotalUtilizedBudgetDepartment();
                 break;
             case "Add Department":
                 this.handleAddDepartment();
@@ -165,7 +171,7 @@ class App {
     }
 
     handleDeleteEmployee() {
-        console.log('handling');
+        // console.log('handling');
         this.#promtpQuestions.promptDeletedEmployeeQuetions()
             .then((data) => {
                 this.#empService.deleteEmployeeAsync(data.empId);
@@ -175,7 +181,7 @@ class App {
     }
 
     handleDeleteRole() {
-        console.log('handling');
+        // console.log('handling');
         this.#promtpQuestions.promptDeletedRoleQuetions()
             .then((data) => {
                 this.#roleService.deleteRoleAsync(data.roleTitle);
@@ -229,6 +235,37 @@ class App {
             })
         })
     }
+
+    handleViewCountEmployeesGroupBy() {
+        this.#promtpQuestions.promptViewCoutEmployeeBySthQuestions()
+            .then(data => {
+                // console.log(data);
+                let keyWord = '';
+                switch (data.groupBy) {
+                    case 'Group By Manager':
+                        keyWord = 'manager_id';
+                        this.#empService.displayEmployeeGroupByAsync(keyWord)
+                            .then(() => this.#promtpQuestions.promptInitialQuestions())
+                            .then((userInput) => this.decideWhatIsNextStep(userInput.userChoice));
+                        break;
+                    case 'Group By Department':
+                        keyWord = 'roles.department_id';
+                        this.#empService.displayEmployeeGroupByAsync(keyWord)
+                            .then(() => this.#promtpQuestions.promptInitialQuestions())
+                            .then((userInput) => this.decideWhatIsNextStep(userInput.userChoice));
+                        break;
+                    default:
+                        break;
+                }
+            })
+    }
+
+    handleViewTotalUtilizedBudgetDepartment() {
+        this.#deptService.displayTotalBudgetOfAnDepartment()
+            .then(() => this.#promtpQuestions.promptInitialQuestions())
+            .then((userInput) => this.decideWhatIsNextStep(userInput.userChoice));
+    }
+
 }
 
 module.exports = App;

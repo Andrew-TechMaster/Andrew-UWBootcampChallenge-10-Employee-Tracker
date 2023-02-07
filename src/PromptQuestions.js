@@ -49,6 +49,11 @@ class PromptQuestions {
         return inquirer.prompt(questions);
     }
 
+    promptViewCoutEmployeeBySthQuestions() {
+        const questions = this.getViewCoutEmployeeBySthQuestions();
+        return inquirer.prompt(questions);
+    }
+
     /**
     *  the following "getXXXQuestions()" are Functions to return list of questions, will get called and be prompted in the promptXXXQuestions() functions
     *  Questions type and validatation were implemented here
@@ -60,6 +65,7 @@ class PromptQuestions {
                 message: "What would you like to do?",
                 choices: [
                     "View All Empolyees",
+                    "View Count Of Employees Group By...",
                     "Add Employee",
                     "Update Employee Role",
                     "Delete Employee",
@@ -67,6 +73,7 @@ class PromptQuestions {
                     "Add Role",
                     "Delete Role",
                     "View All Departmens",
+                    "View The Total Utilized Budget Of A Department",
                     "Add Department",
                     "Delete Department",
                     "<---------------❌ Quit ❌--------------->"
@@ -158,6 +165,22 @@ class PromptQuestions {
                 message: "What is the id of the employee you want to delete?",
                 name: "empId",
                 validate: (data) => this.#validator.checkIsNumber(data)
+            }
+        ];
+
+        return questions;
+    }
+
+    getViewCoutEmployeeBySthQuestions() {
+        const questions = [
+            {
+                type: "list",
+                message: "You want to view the count of employees grouped by...?",
+                choices: [
+                    "Group By Department",
+                    "Group By Manager"
+                ],
+                name: "groupBy"
             }
         ];
 

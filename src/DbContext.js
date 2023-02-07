@@ -4,9 +4,9 @@ const connectionString = {
     host: 'localhost',
     // MySQL username
     user: 'root',
-    // MySQL password
+    // MySQL user password
     password: 'mac@sql201',
-    // database: 'grocery_db'
+    // MySQL db name
     database: 'company_db'
 }
 
