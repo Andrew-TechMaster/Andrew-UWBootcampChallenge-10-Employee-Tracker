@@ -214,7 +214,6 @@ class App {
                 choices: updatedEmpName,
                 name: 'updatedEmp'
             }).then((updatedEmp) => {
-                // console.log(updatedEmpId);
                 this.#roleService.getAllRolesAsync().then((data) => {
                     const tempList = [];
                     data.forEach(el => {

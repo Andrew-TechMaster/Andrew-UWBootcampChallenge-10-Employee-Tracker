@@ -164,7 +164,7 @@ class PromptQuestions {
                 type: "input",
                 message: "What is the id of the employee you want to delete?",
                 name: "empId",
-                validate: (data) => this.#validator.checkIsNumber(data)
+                validate: (data) => this.#validator.checkIsId(data)
             }
         ];
 
