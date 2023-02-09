@@ -1,17 +1,17 @@
 # Andrew's Employee Tracker
 
 ## 🔎 Overview:
-> * Using mysql2 to connect database MySql 
+> * Connecting to MySql database using "mysql2"
 >
-> * Using dotenv for connecting and hiding config info: DB_NAME, DB_USER, and DB_PASSWORD
+> * Hiding database configuration information (DB_NAME, DB_USER, and DB_PASSWORD) by utilizing "dotenv"
 >
-> * Using inquirer to promt questions & pass the data
+> * Prompting questions and collecting data with "inquirer"
 >
-> * Use "npm i" to install dependencies. Then use "node index" to start the application
+> * To install dependencies, run "npm i" and then start the application with "node index"
 >
-> * Remeber to get access to the db folder first then use the following syntax: 'mysql -u root -p'. After typing your password then do 'source schema.sql' and 'source seeds.sql' to initialize the db and tables
+> * Accessing the db folder, use the command "mysql -u root -p" to enter the MySQL terminal. After entering your password, execute the commands "source schema.sql" and "source seeds.sql" to set up the database and tables.
 >
-> **Note**: Don't forget to change the '.env.Example' to '.env' and make defalut settings to your own settings.
+> **Note**: Don't forget to rename '.env.Example' to '.env' and update the default settings with your own
 >
 
 
@@ -22,7 +22,7 @@
 Video's URL: 
 https://drive.google.com/file/d/1lEcN_XXVjbq3NGa0naqvl_skkCkAHCm8/view
 
-(If the link doesn't work, follow the instructions from the gif demo at the bottom of the document.)
+(If the link is not functional, please refer to the gif demonstration at the bottom of the document for guidance.)
 ```
 
 ## 📷 Screenshots Of The Applications:
@@ -33,7 +33,7 @@ https://drive.google.com/file/d/1lEcN_XXVjbq3NGa0naqvl_skkCkAHCm8/view
 
 |![screentshot02](./assets/02.png)|
 |:--:| 
-| *↑ Crud Application for 3 tables ↑* |
+| *↑ A CRUD (Create, Read, Update, Delete) Application for managing three separate tables. ↑* |
 
 |![screentshot03](./assets/12-sql-homework-demo-01.png)|
 |:--:| 
@@ -53,7 +53,7 @@ https://drive.google.com/file/d/1lEcN_XXVjbq3NGa0naqvl_skkCkAHCm8/view
 
 |![screentshot07](./assets/06.png)|
 |:--:| 
-| *↑ Type Validations ↑* |
+| *↑ The application includes various validation checks. ↑* |
 
 |![screentshot03](./assets/Employee%20Tracker.gif)|
 |:--:| 
